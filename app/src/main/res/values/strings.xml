@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">AndroformsSampleApp</string>
+    <string name="suscribe_url">"http://www.popopow.com/androforms/androforms.yeti.json"</string>
 </resources>
