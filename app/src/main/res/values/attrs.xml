@@ -3,4 +3,7 @@
     <declare-styleable name="MyTextView">
         <attr name="fontName" format="string" />
     </declare-styleable>
+    <declare-styleable name="QAView">
+        <attr name="url" format="string"/>
+    </declare-styleable>
 </resources>
