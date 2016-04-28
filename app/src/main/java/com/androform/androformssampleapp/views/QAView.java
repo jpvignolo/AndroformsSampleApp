@@ -5,7 +5,9 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.androform.androformssampleapp.R;
 import com.androform.androformssampleapp.data.Answer;
@@ -13,6 +15,7 @@ import com.androform.androformssampleapp.data.Question;
 import com.androform.androformssampleapp.lib.MyAsyncCallback;
 import com.androform.androformssampleapp.lib.MyAsyncTask;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -43,6 +46,21 @@ public class QAView extends RelativeLayout {
         init(attrs);
     }
 
+    private void drawQA(JSONObject question) {
+        if (question != null) {
+            TextView questionTv = new TextView(getContext());
+            try {
+                questionTv.setText(question.getString("label"));
+                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                params.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
+                this.addView(questionTv, params);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     private void init(AttributeSet attrs) {
         if (attrs!=null) {
             TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.QAView);
@@ -60,6 +78,8 @@ public class QAView extends RelativeLayout {
                         Log.d("MainActivity",result);
                         try {
                             JSONObject jObject = new JSONObject(result);
+                            JSONArray jQuestionArray = jObject.getJSONArray("questions");
+                            drawQA(jQuestionArray.getJSONObject(0));
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
